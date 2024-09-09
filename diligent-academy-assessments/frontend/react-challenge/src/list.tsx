@@ -11,6 +11,7 @@ const List = () => {
     const [items, setItems] = useState<Hero[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const getItems = async () => {
@@ -31,11 +32,23 @@ const List = () => {
     if (loading) return <p>Loading</p>;
     if (error) return <p>{error}</p>;
 
+    const handleClick = (index: number) => {
+        setItems(prevItems =>
+            prevItems.map((item, idx) =>
+                idx === (index-1) ? { ...item, available: !item.available } : item
+            )
+        );
+    }
+
     return (
         <ul style={{listStyleType: 'none', paddingLeft: 0}}>
             {items.map((items: Hero) => (
-                <li key={items.id}>
-                    {items.id}. {items.name} {items.available ? items.available : null}
+                <li
+                    key={items.id}
+                    onClick={() => handleClick(items.id)}
+                    style={{color: items.available ? 'green' : 'red'}}
+                >
+                    {items.id}. {items.name} {items.available ? '"Available"' : null}
                 </li>
             ))}
 
