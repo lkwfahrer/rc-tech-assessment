@@ -40,12 +40,18 @@ const List = () => {
     }
 
     return (
-        <ul style={{listStyleType: 'none', paddingLeft: 0}}>
+        <ul style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            listStyleType: 'none',
+            paddingLeft: 0}}
+        >
             {items.map((items: Hero) => (
                 <li
                     key={items.id}
                     onClick={() => handleClick(items.id)}
-                    style={{color: items.available ? 'green' : 'red'}}
+                    style={{color: items.available ? 'green' : 'red',flex: '0 0 33.33%'}}
                 >
                     {items.id}. {items.name} {items.available ? '"Available"' : null}
                 </li>
