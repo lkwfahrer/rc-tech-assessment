@@ -11,7 +11,6 @@ const List = () => {
     const [items, setItems] = useState<Hero[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const getItems = async () => {
@@ -30,7 +29,7 @@ const List = () => {
     }, []);
 
     if (loading) return <p>Loading</p>;
-    if (error) return <p>{error}</p>;
+    if (error) return <p>Failed to fetch heroes</p>;
 
     const handleClick = (index: number) => {
         setItems(prevItems =>
