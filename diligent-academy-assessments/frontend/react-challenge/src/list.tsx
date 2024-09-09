@@ -1,38 +1,15 @@
-import React, { useState, useEffect} from "react";
-import {callApi} from "./call-api";
-
-interface Hero {
-    id: number;
-    name: string;
-    available: boolean;
-}
+import React from "react";
+import { Hero } from "./useFetchHeroes";
+import useFetchHeroes from "./useFetchHeroes";
 
 const List = () => {
-    const [items, setItems] = useState<Hero[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        const getItems = async () => {
-            try {
-                const heroes: Hero[] = await callApi("heroes");
-                setItems(heroes)
-            }
-            catch (e) {
-                setError("Fetching failed");
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getItems();
-    }, []);
+    const { items, loading, error, setItems } = useFetchHeroes();
 
     if (loading) return <p>Loading</p>;
     if (error) return <p>Failed to fetch heroes</p>;
 
     const handleClick = (index: number) => {
-        setItems(prevItems =>
+        setItems((prevItems: Hero[]) =>
             prevItems.map((item, idx) =>
                 idx === (index-1) ? { ...item, available: !item.available } : item
             )
